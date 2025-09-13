@@ -1,0 +1,133 @@
+<odoo>
+    <!-- List View -->
+    <record id="view_library_author_list" model="ir.ui.view">
+        <field name="name">library.author.list</field>
+        <field name="model">library.author</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="nationality"/>
+                <field name="birth_date"/>
+                <field name="death_date"/>
+                <field name="is_alive"/>
+                <field name="book_count"/>
+                <field name="average_rating"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_library_author_form" model="ir.ui.view">
+        <field name="name">library.author.form</field>
+        <field name="model">library.author</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="active"/>
+                        <field name="name"/>
+                        <field name="nationality"/>
+                        <field name="birth_date"/>
+                        <field name="death_date"/>
+                        <field name="age" readonly="1"/>
+                        <field name="is_alive" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="email"/>
+                        <field name="website"/>
+                    </group>
+                    <group>
+                        <field name="awards"/>
+                    </group>
+                    <group>
+                        <field name="biography"/>
+                    </group>
+                    <group>
+                        <field name="book_count" readonly="1"/>
+                        <field name="average_rating" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Books">
+                            <field name="book_ids" widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_library_author_search" model="ir.ui.view">
+        <field name="name">library.author.search</field>
+        <field name="model">library.author</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="nationality"/>
+                <field name="birth_date"/>
+                <field name="death_date"/>
+                <field name="is_alive"/>
+                <field name="active"/>
+                <filter string="Alive" name="alive" domain="[('is_alive','=',True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_library_author_kanban" model="ir.ui.view">
+        <field name="name">library.author.kanban</field>
+        <field name="model">library.author</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="nationality"/>
+                <field name="birth_date"/>
+                <field name="death_date"/>
+                <field name="is_alive"/>
+                <field name="book_count"/>
+                <field name="average_rating"/>
+                <field name="active"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div>
+                                <span t-if="record.nationality.value">Nationality: <field name="nationality"/></span>
+                            </div>
+                            <div>
+                                <span t-if="record.birth_date.value">Born: <field name="birth_date"/></span>
+                                <span t-if="record.death_date.value"> | Died: <field name="death_date"/></span>
+                            </div>
+                            <div>
+                                <span t-if="record.is_alive.value">Alive</span>
+                                <span t-if="!record.is_alive.value">Deceased</span>
+                            </div>
+                            <div>
+                                Books: <field name="book_count"/>
+                            </div>
+                            <div>
+                                Avg. Rating: <field name="average_rating"/>
+                            </div>
+                            <div>
+                                <field name="active"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_library_author" model="ir.actions.act_window">
+        <field name="name">Authors</field>
+        <field name="res_model">library.author</field>
+        <field name="view_mode">tree,form,kanban</field>
+        <field name="search_view_id" ref="view_library_author_search"/>
+    </record>
+
+    <!-- Menu Item (adjust parent as needed) -->
+    <menuitem id="menu_library_author_root" name="Authors" parent="library_management.menu_library_root" action="action_library_author"/>
+</odoo>

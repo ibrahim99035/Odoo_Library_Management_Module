@@ -1,0 +1,118 @@
+<odoo>
+    <!-- List View -->
+    <record id="view_library_review_list" model="ir.ui.view">
+        <field name="name">library.review.list</field>
+        <field name="model">library.review</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="member_id"/>
+                <field name="book_id"/>
+                <field name="rating"/>
+                <field name="review_date"/>
+                <field name="state"/>
+                <field name="helpful_count"/>
+                <field name="verified_borrower"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_library_review_form" model="ir.ui.view">
+        <field name="name">library.review.form</field>
+        <field name="model">library.review</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="member_id"/>
+                        <field name="book_id"/>
+                        <field name="rating"/>
+                        <field name="review_date"/>
+                        <field name="state"/>
+                        <field name="verified_borrower" readonly="1"/>
+                        <field name="helpful_count" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="review_text"/>
+                        <field name="moderator_notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_library_review_search" model="ir.ui.view">
+        <field name="name">library.review.search</field>
+        <field name="model">library.review</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="member_id"/>
+                <field name="book_id"/>
+                <field name="rating"/>
+                <field name="state"/>
+                <field name="review_date"/>
+                <filter string="Published" name="published" domain="[('state','=','published')]"/>
+                <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+                <filter string="Moderated" name="moderated" domain="[('state','=','moderated')]"/>
+                <filter string="Rejected" name="rejected" domain="[('state','=','rejected')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_library_review_kanban" model="ir.ui.view">
+        <field name="name">library.review.kanban</field>
+        <field name="model">library.review</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="member_id"/>
+                <field name="book_id"/>
+                <field name="rating"/>
+                <field name="review_date"/>
+                <field name="state"/>
+                <field name="helpful_count"/>
+                <field name="verified_borrower"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div>
+                                <span t-if="record.member_id.value">Reviewer: <field name="member_id"/></span>
+                            </div>
+                            <div>
+                                <span t-if="record.book_id.value">Book: <field name="book_id"/></span>
+                            </div>
+                            <div>
+                                <span>Rating: <field name="rating"/></span>
+                                <span>Status: <field name="state"/></span>
+                            </div>
+                            <div>
+                                <span>Review Date: <field name="review_date"/></span>
+                            </div>
+                            <div>
+                                <span>Helpful: <field name="helpful_count"/></span>
+                                <span t-if="record.verified_borrower.value">Verified Borrower</span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_library_review" model="ir.actions.act_window">
+        <field name="name">Reviews</field>
+        <field name="res_model">library.review</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="search_view_id" ref="view_library_review_search"/>
+    </record>
+
+    <!-- Menu Item (adjust parent as needed) -->
+    <menuitem id="menu_library_review_root" name="Reviews" parent="library_management.menu_library_root" action="action_library_review"/>
+</odoo>

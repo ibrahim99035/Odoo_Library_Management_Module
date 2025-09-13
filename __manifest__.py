@@ -24,9 +24,6 @@
         'portal',
         'website',
         'web',
-        'report_xlsx',
-        'web_kanban_gauge',
-        'web_dashboard_tile',
     ],
     'data': [
         # Security

@@ -1,0 +1,148 @@
+<odoo>
+    <!-- List View -->
+    <record id="view_library_publisher_list" model="ir.ui.view">
+        <field name="name">library.publisher.list</field>
+        <field name="model">library.publisher</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="contact_person"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="website"/>
+                <field name="city"/>
+                <field name="state"/>
+                <field name="country"/>
+                <field name="book_count"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_library_publisher_form" model="ir.ui.view">
+        <field name="name">library.publisher.form</field>
+        <field name="model">library.publisher</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="active"/>
+                        <field name="name"/>
+                        <field name="logo" widget="image"/>
+                        <field name="contact_person"/>
+                        <field name="phone"/>
+                        <field name="email"/>
+                        <field name="website"/>
+                    </group>
+                    <group>
+                        <field name="address"/>
+                        <field name="city"/>
+                        <field name="state"/>
+                        <field name="country"/>
+                    </group>
+                    <group>
+                        <field name="book_count" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Books Published">
+                            <field name="book_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="author_ids"/>
+                                    <field name="category_id"/>
+                                    <field name="publication_date"/>
+                                    <field name="state"/>
+                                    <field name="active"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_library_publisher_search" model="ir.ui.view">
+        <field name="name">library.publisher.search</field>
+        <field name="model">library.publisher</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="contact_person"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="website"/>
+                <field name="city"/>
+                <field name="state"/>
+                <field name="country"/>
+                <field name="active"/>
+                <filter string="Inactive" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_library_publisher_kanban" model="ir.ui.view">
+        <field name="name">library.publisher.kanban</field>
+        <field name="model">library.publisher</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="logo"/>
+                <field name="contact_person"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="website"/>
+                <field name="city"/>
+                <field name="state"/>
+                <field name="country"/>
+                <field name="book_count"/>
+                <field name="active"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div>
+                                <img t-if="record.logo.value" t-att-src="'data:image/png;base64,%s' % record.logo.raw_value" class="oe_kanban_image" style="max-height:80px;"/>
+                            </div>
+                            <strong><field name="name"/></strong>
+                            <div>
+                                <span t-if="record.contact_person.value">Contact: <field name="contact_person"/></span>
+                            </div>
+                            <div>
+                                <span t-if="record.phone.value">Phone: <field name="phone"/></span>
+                                <span t-if="record.email.value">Email: <field name="email"/></span>
+                            </div>
+                            <div>
+                                <span t-if="record.website.value">Website: <field name="website"/></span>
+                            </div>
+                            <div>
+                                <span t-if="record.city.value">City: <field name="city"/></span>
+                                <span t-if="record.state.value">State: <field name="state"/></span>
+                                <span t-if="record.country.value">Country: <field name="country"/></span>
+                            </div>
+                            <div>
+                                <span>Books: <field name="book_count"/></span>
+                            </div>
+                            <div>
+                                <field name="active"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_library_publisher" model="ir.actions.act_window">
+        <field name="name">Publishers</field>
+        <field name="res_model">library.publisher</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="search_view_id" ref="view_library_publisher_search"/>
+    </record>
+
+    <!-- Menu Item (adjust parent as needed) -->
+    <menuitem id="menu_library_publisher_root" name="Publishers" parent="library_management.menu_library_root" action="action_library_publisher"/>
+</odoo>

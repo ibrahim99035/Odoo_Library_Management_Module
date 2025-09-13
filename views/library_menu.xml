@@ -1,0 +1,14 @@
+<odoo>
+    <menuitem id="menu_library_root" name="Library"/>
+    <menuitem id="menu_library_dashboard" name="Dashboard" parent="menu_library_root" action="action_library_dashboard"/>
+    <menuitem id="menu_library_books" name="Books" parent="menu_library_root" action="action_library_book"/>
+    <menuitem id="menu_library_authors" name="Authors" parent="menu_library_root" action="action_library_author"/>
+    <menuitem id="menu_library_members" name="Members" parent="menu_library_root" action="action_library_member"/>
+    <menuitem id="menu_library_borrowings" name="Borrowings" parent="menu_library_root" action="action_library_borrowing"/>
+    <menuitem id="menu_library_fines" name="Fines" parent="menu_library_root" action="action_library_fine"/>
+    <menuitem id="menu_library_publishers" name="Publishers" parent="menu_library_root" action="action_library_publisher"/>
+    <menuitem id="menu_library_categories" name="Categories" parent="menu_library_root" action="action_library_category"/>
+    <menuitem id="menu_library_reservations" name="Reservations" parent="menu_library_root" action="action_library_reservation"/>
+    <menuitem id="menu_library_reviews" name="Reviews" parent="menu_library_root" action="action_library_review"/>
+    <menuitem id="menu_library_config" name="Configuration" parent="menu_library_root" action="action_library_config"/>
+</odoo>

@@ -36,9 +36,9 @@ class LibraryConfig(models.Model):
     isActive = fields.Boolean(string='Is Active', default=True)
 
     # Ensures that thres is always one config record, If none exists, create one with default values
-    @api.model
-    def get_config(self):
-        config = self.search([], limit=1)
+    @api.model # Decorator to indicate that this method doesn't depend on a particular record
+    def get_config(self): # self here refers to the model itself as a recordset library.config
+        config = self.search([], limit=1) # Search for existing config records, no filters, limit to 1 result
         if not config:
-            config = self.create({'library_name': 'Default Library'})
+            config = self.create({'library_name': 'Default Library'}) # No records, then create a deafult one
         return config

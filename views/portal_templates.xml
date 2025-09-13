@@ -1,0 +1,14 @@
+<template id="library_portal_home" name="Library Portal Home">
+    <t t-call="portal.layout">
+        <div class="o_portal_library_home">
+            <h2>Welcome to the Library Portal</h2>
+            <p>View your borrowed books, reservations, fines, and reviews.</p>
+            <ul>
+                <li><a href="/my/borrowings">My Borrowings</a></li>
+                <li><a href="/my/reservations">My Reservations</a></li>
+                <li><a href="/my/fines">My Fines</a></li>
+                <li><a href="/my/reviews">My Reviews</a></li>
+            </ul>
+        </div>
+    </t>
+</template>

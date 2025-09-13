@@ -1,0 +1,10 @@
+<odoo>
+    <!-- Client Action for Dashboard -->
+    <record id="action_library_dashboard" model="ir.actions.client">
+        <field name="name">Library Dashboard</field>
+        <field name="tag">library_management.dashboard</field>
+    </record>
+
+    <!-- Menu Item (if not already in library_menu.xml) -->
+    <menuitem id="menu_library_dashboard" name="Dashboard" parent="menu_library_root" action="action_library_dashboard"/>
+</odoo>

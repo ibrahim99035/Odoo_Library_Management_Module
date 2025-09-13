@@ -1,0 +1,128 @@
+<odoo>
+    <!-- List View -->
+    <record id="view_library_reservation_list" model="ir.ui.view">
+        <field name="name">library.reservation.list</field>
+        <field name="model">library.reservation</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="member_id"/>
+                <field name="book_id"/>
+                <field name="reservation_date"/>
+                <field name="expiry_date"/>
+                <field name="state"/>
+                <field name="priority"/>
+                <field name="queue_position"/>
+                <field name="notification_sent"/>
+                <field name="fulfilled_date"/>
+                <field name="borrowing_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_library_reservation_form" model="ir.ui.view">
+        <field name="name">library.reservation.form</field>
+        <field name="model">library.reservation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="member_id"/>
+                        <field name="book_id"/>
+                        <field name="reservation_date"/>
+                        <field name="expiry_date" readonly="1"/>
+                        <field name="state"/>
+                        <field name="priority"/>
+                        <field name="queue_position" readonly="1"/>
+                        <field name="notification_sent"/>
+                        <field name="fulfilled_date" readonly="1"/>
+                        <field name="borrowing_id"/>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_library_reservation_search" model="ir.ui.view">
+        <field name="name">library.reservation.search</field>
+        <field name="model">library.reservation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="member_id"/>
+                <field name="book_id"/>
+                <field name="state"/>
+                <field name="reservation_date"/>
+                <field name="expiry_date"/>
+                <filter string="Active" name="active" domain="[('state','=','active')]"/>
+                <filter string="Fulfilled" name="fulfilled" domain="[('state','=','fulfilled')]"/>
+                <filter string="Expired" name="expired" domain="[('state','=','expired')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('state','=','cancelled')]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_library_reservation_kanban" model="ir.ui.view">
+        <field name="name">library.reservation.kanban</field>
+        <field name="model">library.reservation</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="member_id"/>
+                <field name="book_id"/>
+                <field name="reservation_date"/>
+                <field name="expiry_date"/>
+                <field name="state"/>
+                <field name="priority"/>
+                <field name="queue_position"/>
+                <field name="notification_sent"/>
+                <field name="fulfilled_date"/>
+                <field name="borrowing_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="name"/></strong>
+                            <div>
+                                <span t-if="record.member_id.value">Member: <field name="member_id"/></span>
+                            </div>
+                            <div>
+                                <span t-if="record.book_id.value">Book: <field name="book_id"/></span>
+                            </div>
+                            <div>
+                                <span>Reserved: <field name="reservation_date"/></span>
+                                <span>Expiry: <field name="expiry_date"/></span>
+                            </div>
+                            <div>
+                                <span>Status: <field name="state"/></span>
+                                <span>Priority: <field name="priority"/></span>
+                                <span>Queue: <field name="queue_position"/></span>
+                            </div>
+                            <div>
+                                <span t-if="record.notification_sent.value">Notified</span>
+                                <span t-if="record.fulfilled_date.value">Fulfilled: <field name="fulfilled_date"/></span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_library_reservation" model="ir.actions.act_window">
+        <field name="name">Reservations</field>
+        <field name="res_model">library.reservation</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="search_view_id" ref="view_library_reservation_search"/>
+    </record>
+
+    <!-- Menu Item (adjust parent as needed) -->
+    <menuitem id="menu_library_reservation_root" name="Reservations" parent="library_management.menu_library_root" action="action_library_reservation"/>
+</odoo>

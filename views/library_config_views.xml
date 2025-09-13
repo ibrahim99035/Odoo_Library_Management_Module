@@ -1,0 +1,119 @@
+<odoo>
+    <!-- List View -->
+    <record id="view_library_config_list" model="ir.ui.view">
+        <field name="name">library.config.list</field>
+        <field name="model">library.config</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="library_name"/>
+                <field name="isActive"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="website"/>
+                <field name="max_borrow_days"/>
+                <field name="max_renewals"/>
+                <field name="fine_per_day"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_library_config_form" model="ir.ui.view">
+        <field name="name">library.config.form</field>
+        <field name="model">library.config</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="isActive"/>
+                        <field name="library_name"/>
+                        <field name="address"/>
+                        <field name="phone"/>
+                        <field name="email"/>
+                        <field name="website"/>
+                    </group>
+                    <group string="Borrowing Policies">
+                        <field name="max_borrow_days"/>
+                        <field name="max_renewals"/>
+                        <field name="fine_per_day"/>
+                    </group>
+                    <group string="Borrowing Limits">
+                        <field name="max_books_student"/>
+                        <field name="max_books_faculty"/>
+                        <field name="max_books_public"/>
+                    </group>
+                    <group string="Notification Settings">
+                        <field name="reservation_expiry_days"/>
+                        <field name="overdue_notification_days"/>
+                    </group>
+                    <group string="Working Hours">
+                        <field name="working_hours_start"/>
+                        <field name="working_hours_end"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_library_config_search" model="ir.ui.view">
+        <field name="name">library.config.search</field>
+        <field name="model">library.config</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="library_name"/>
+                <field name="isActive"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="website"/>
+                <filter string="Inactive" name="inactive" domain="[('isActive','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_library_config_kanban" model="ir.ui.view">
+        <field name="name">library.config.kanban</field>
+        <field name="model">library.config</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="library_name"/>
+                <field name="isActive"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="website"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <strong><field name="library_name"/></strong>
+                            <div>
+                                <span t-if="record.isActive.value">Active</span>
+                                <span t-if="!record.isActive.value">Inactive</span>
+                            </div>
+                            <div>
+                                <span t-if="record.phone.value">Phone: <field name="phone"/></span>
+                            </div>
+                            <div>
+                                <span t-if="record.email.value">Email: <field name="email"/></span>
+                            </div>
+                            <div>
+                                <span t-if="record.website.value">Website: <field name="website"/></span>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_library_config" model="ir.actions.act_window">
+        <field name="name">Library Configuration</field>
+        <field name="res_model">library.config</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="search_view_id" ref="view_library_config_search"/>
+    </record>
+
+    <!-- Menu Item (adjust parent as needed) -->
+    <menuitem id="menu_library_config_root" name="Configuration" parent="library_management.menu_library_root" action="action_library_config"/>
+</odoo>
